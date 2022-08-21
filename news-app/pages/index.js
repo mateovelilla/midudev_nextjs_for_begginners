@@ -26,7 +26,7 @@ export default function Home({ articles }) {
   )
 }
 export async function getStaticProps() {
-  const response = await fetch('https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=3e51a48d6496492389f2505c5e88bf36')
+  const response = await fetch('')
   const { articles } = await response.json()
   return {
     props: {
