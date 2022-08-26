@@ -19,27 +19,12 @@ struct Base {
     title: String,
     day: String,
 }
-#[derive(Serialize, Deserialize)]
-struct Comic {
-    month: String,
-    num: i32,
-    link: String,
-    year: String,
-    news: String,
-    safe_title: String,
-    transcript: String,
-    alt: String,
-    img: String,
-    title: String,
-    day: String,
-    width: u32,
-    height: u32,
-}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Donwloading Comics...👇👇👇");
-    for comic_id in 2610..2660 {
+    let mut comics = String::from("[");
+    for comic_id in 2600..2660 {
         let url_formated = format!("https://xkcd.com/{}/info.0.json", comic_id);
         println!("{}",url_formated);
         let url = Url::parse(&*url_formated)?;
@@ -96,6 +81,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             "title": base_data.title,
             "day": base_data.day,
         });
+        comics.push_str(&comic_to_save.to_string());
+        if comic_id != 2659 {
+            comics.push_str(",");
+        }
 
         // Delete temp files
         remove_file(path_to_save_image)?;
@@ -103,8 +92,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         // Save Json
         write(file_name, comic_to_save.to_string()).unwrap();
 
-        println!("{}", comic_to_save.to_string());
+        // println!("{}", comic_to_save.to_string());
     }
+    comics.push_str("]");
     println!("Finished...✅");
+    println!("{:?}", comics);
+    write("../../comics/index.json",comics ).unwrap();
     Ok(())
 }
