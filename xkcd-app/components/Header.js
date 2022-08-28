@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { useRouter } from 'next/router';
 export function Header() {
     const [results, setResults] = useState([])
     const searchRef = useRef();
-
+    const {locale, locales } = useRouter()
     const getValue = () => searchRef.current?.value
     const handleChange = () =>  {
         const q = getValue();
@@ -14,6 +15,7 @@ export function Header() {
                 setResults(searchResults)
             })
     }
+    const restOfLocales = locales.filter(l=>l!==locale)
     return (
 
     <header className="flex justify-between items-center p4 max-w-xl m-auto">
@@ -27,6 +29,7 @@ export function Header() {
             <nav>
                 <ul className="flex flex-row gap-2">
                     <li><Link href="/"><a className="text-sm font-bold">Home</a></Link></li>
+                    <li><Link href="/" locale={restOfLocales[0]}><a className="text-sm font-bold">{restOfLocales[0]}</a></Link></li>
                     <li>
                         <input className="px-4 py-1 text-xs border border-gray-400 rounded-3xl" ref={searchRef} type='search' onChange={handleChange}/>
                         <div className="relative z-10">

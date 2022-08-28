@@ -10,7 +10,6 @@ export default function Home({latestComics}) {
   return (
     <>
       <Head>
-        <title>xkcd - Comics for developers</title>
         <meta name="description" content="Comics for developers"/>
       </Head>
       <Layout>
