@@ -4,7 +4,9 @@ import Head from 'next/head';
 
 import fs from 'node:fs/promises';
 import { Layout } from 'components/Layout';
+import { useI18N } from 'context/i18n';
 export default function Home({latestComics}) {
+  const { translate } = useI18N()
   return (
     <>
       <Head>
@@ -12,7 +14,7 @@ export default function Home({latestComics}) {
         <meta name="description" content="Comics for developers"/>
       </Head>
       <Layout>
-        <h2 className='text-3xl font-bold text-center mb-10'>Latest Comics</h2>
+        <h2 className='text-3xl font-bold text-center mb-10'>{translate('LATEST_COMICS')}</h2>
         <section className='grid max-w-md grid-cols-1 gap-2 m-auto sm:grid-cols-2 md:grid-cols-3'>
           {
             latestComics.map( comic => {
